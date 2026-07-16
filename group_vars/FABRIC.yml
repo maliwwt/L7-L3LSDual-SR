@@ -1,0 +1,21 @@
+---
+fabric_name: FABRIC
+
+evpn_vlan_aware_bundles: false
+custom_structured_configuration_prefix: ['custom_']
+
+p2p_uplinks_mtu: 1500
+
+bfd_multihop:
+  interval: 1200
+  min_rx: 1200
+  multiplier: 3
+
+bgp_update_wait_install: false
+bgp_update_wait_for_convergence: false
+
+dns_domain: atd.lab
+mgmt_interface: Management0
+mgmt_interface_vrf: MGMT
+mgmt_gateway: 192.168.0.1
+   

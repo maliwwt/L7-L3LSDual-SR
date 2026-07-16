@@ -1,0 +1,67 @@
+CVP_CONFIGLETS:
+
+
+
+CONTAINERS_DEFAULT:
+  DC1:
+      parentContainerName: Tenant
+  Spine:
+      parentContainerName: Tenant
+  Leaf:
+      parentContainerName: Tenant
+  Borderleaf:
+      parentContainerName: Tenant
+  Hosts:
+      parentContainerName: Tenant
+ 
+CVP_DEVICES_DEFAULT:
+  - fqdn: 'dc1-spine1'
+    parentContainerName: 'Spine'
+    configlets:
+      - 'ATD-INFRA'
+      - 'dc1-spine1-base'
+  - fqdn: 'dc2-spine1'
+    parentContainerName: 'Spine'
+    configlets:
+      - 'ATD-INFRA'
+      - 'dc2-spine1-base'
+  - fqdn: 
+    parentContainerName: 'Spine'
+    configlets:
+      - 'ATD-INFRA'
+      - 'spine3-base'
+  - fqdn: 
+    parentContainerName: 'Spine'
+    configlets:
+      - 'ATD-INFRA'
+      - 'spine4-base'
+  - fqdn: 'dc1-leaf1a'
+    parentContainerName: 'Leaf'
+    configlets:
+      - 'ATD-INFRA'
+      - 'dc1-leaf1a-base'
+  - fqdn: 'dc1-leaf1b'
+    parentContainerName: 'Leaf'
+    configlets:
+      - 'ATD-INFRA'
+      - 'dc1-leaf1b-base'
+  - fqdn: 'dc2-leaf2a'
+    parentContainerName: 'Leaf'
+    configlets:
+      - 'ATD-INFRA'
+      - 'dc2-leaf2a-base'
+  - fqdn: 'dc2-leaf2b'
+    parentContainerName: 'Leaf'
+    configlets:
+      - 'ATD-INFRA'
+      - 'dc2-leaf2b-base'
+  - fqdn: 'borderleaf1'
+    parentContainerName: 'Borderleaf'
+    configlets:
+      - 'ATD-INFRA'
+      - 'borderleaf1-base'
+  - fqdn: 'borderleaf2'
+    parentContainerName: 'Borderleaf'
+    configlets:
+      - 'ATD-INFRA'
+      - 'borderleaf2-base'

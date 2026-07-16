@@ -1,0 +1,24 @@
+---
+- name: Build AVD fabric designs (spine/leaf only)
+  hosts: DC1:DC2
+  tasks:
+    - name: Generate AVD Structured Configurations and Fabric Documentation
+      ansible.builtin.import_role:
+        name: arista.avd.eos_designs
+
+- name: Stage Core1/Core2 structured configs
+  hosts: CORE
+  gather_facts: false
+  tasks:
+    - name: Copy native structured config for core devices
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../host_vars/{{ inventory_hostname }}.yml"
+        dest: "{{ playbook_dir }}/../intended/structured_configs/{{ inventory_hostname }}.yml"
+        remote_src: false
+
+- name: Generate final device configs (fabric + core)
+  hosts: FABRIC:CORE
+  tasks:
+    - name: Generate Device Configurations and Documentation
+      ansible.builtin.import_role:
+        name: arista.avd.eos_cli_config_gen

@@ -1,0 +1,87 @@
+---
+all:
+  children:
+    CVP_cluster:
+      vars:
+        ansible_user: ansible
+        ansible_password: CHANGEME
+        ansible_connection: httpapi
+        ansible_httpapi_use_ssl: True
+        ansible_httpapi_validate_certs: False
+        ansible_network_os: eos
+        ansible_httpapi_port: 443
+      hosts:
+        cvp1:
+          ansible_httpapi_host: 192.168.0.5
+          ansible_host: 192.168.0.5
+
+    FABRIC:
+      vars:
+        ansible_user: ansible
+        ansible_password: CHANGEME
+        ansible_connection: httpapi
+        ansible_httpapi_use_ssl: True
+        ansible_httpapi_validate_certs: False
+        ansible_network_os: eos
+        ansible_httpapi_port: 443
+        ansible_become: yes
+        ansible_become_method: enable
+      children:
+        DC1:
+          children:
+            DC1_SPINES:
+              vars:
+                type: spine
+              hosts:
+                dc1-spine1:
+                  ansible_host: 192.168.0.11
+            DC1_LEAFS:
+              vars:
+                type: l3leaf
+              hosts:
+                dc1-leaf1a:
+                  ansible_host: 192.168.0.13
+                dc1-leaf1b:
+                  ansible_host: 192.168.0.14
+        DC2:
+          children:
+            DC2_SPINES:
+              vars:
+                type: spine
+              hosts:
+                dc2-spine1:
+                  ansible_host: 192.168.0.12
+            DC2_LEAFS:
+              vars:
+                type: l3leaf
+              hosts:
+                dc2-leaf2a:
+                  ansible_host: 192.168.0.15
+                dc2-leaf2b:
+                  ansible_host: 192.168.0.16
+
+    CORE:
+      vars:
+        ansible_user: ansible
+        ansible_password: CHANGEME
+        ansible_connection: httpapi
+        ansible_httpapi_use_ssl: True
+        ansible_httpapi_validate_certs: False
+        ansible_network_os: eos
+        ansible_httpapi_port: 443
+        ansible_become: yes
+        ansible_become_method: enable
+      hosts:
+        Core1:
+          ansible_host: 192.168.0.17
+        Core2:
+          ansible_host: 192.168.0.18
+
+    EVPN_SERVICES:
+      children:
+        DC1_LEAFS:
+        DC2_LEAFS:
+    ENDPOINT_CONNECT:
+      children:
+        DC1_LEAFS:
+        DC2_LEAFS:

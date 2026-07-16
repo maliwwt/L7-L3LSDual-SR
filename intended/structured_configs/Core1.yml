@@ -1,0 +1,97 @@
+---
+hostname: Core1
+
+loopback_interfaces:
+  - name: Loopback0
+    description: SR-ISIS Router ID
+    ip_address: 192.168.99.1/32
+    isis_enable: CORE
+    isis_passive: true
+
+ethernet_interfaces:
+  - name: Ethernet1
+    description: P2P_Core2_Ethernet1
+    mtu: 1500
+    ip_address: 192.168.98.0/31
+    isis_enable: CORE
+    isis_network_point_to_point: true
+  - name: Ethernet10
+    description: P2P_dc1-leaf1a_Ethernet10
+    mtu: 1500
+    ip_address: 192.168.98.2/31
+    isis_enable: CORE
+    isis_network_point_to_point: true
+  - name: Ethernet11
+    description: P2P_dc1-leaf1b_Ethernet11
+    mtu: 1500
+    ip_address: 192.168.98.6/31
+    isis_enable: CORE
+    isis_network_point_to_point: true
+  - name: Ethernet12
+    description: P2P_dc2-leaf2a_Ethernet12
+    mtu: 1500
+    ip_address: 192.168.98.10/31
+    isis_enable: CORE
+    isis_network_point_to_point: true
+  - name: Ethernet13
+    description: P2P_dc2-leaf2b_Ethernet13
+    mtu: 1500
+    ip_address: 192.168.98.14/31
+    isis_enable: CORE
+    isis_network_point_to_point: true
+
+router_isis:
+  instance: CORE
+  net: 49.0001.0000.0000.0001.00
+  is_type: level-2
+  log_adjacency_changes: true
+  address_family_ipv4:
+    enabled: true
+  segment_routing_mpls:
+    enabled: true
+    router_id: 192.168.99.1
+    prefix_segments:
+      - prefix: 192.168.99.1/32
+        index: 1
+
+mpls:
+  ip: true
+  ldp:
+    shutdown: true
+
+router_bgp:
+  as: 65298
+  router_id: 192.168.99.1
+  peer_groups:
+    - name: EVPN-LEAFS
+      update_source: Loopback0
+      ebgp_multihop: 5
+      send_community: extended
+      route_reflector_client: true
+    - name: EVPN-CORE
+      update_source: Loopback0
+      next_hop_self: true
+      send_community: extended
+  neighbors:
+    - ip_address: 192.168.99.2
+      peer_group: EVPN-CORE
+      remote_as: 65298
+    - ip_address: 192.168.99.11
+      peer_group: EVPN-LEAFS
+      remote_as: 65100
+    - ip_address: 192.168.99.12
+      peer_group: EVPN-LEAFS
+      remote_as: 65100
+    - ip_address: 192.168.99.23
+      peer_group: EVPN-LEAFS
+      remote_as: 65299
+    - ip_address: 192.168.99.24
+      peer_group: EVPN-LEAFS
+      remote_as: 65299
+  address_family_evpn:
+    peer_groups:
+      - name: EVPN-LEAFS
+        activate: true
+      - name: EVPN-CORE
+        activate: true
+        

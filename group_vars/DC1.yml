@@ -1,0 +1,41 @@
+---
+# Spine Switches
+spine:
+  defaults:
+    platform: cEOS-lab
+    bgp_as: 65001
+    loopback_ipv4_pool: 192.168.101.0/24
+    mlag: false
+  nodes:
+    - name: dc1-spine1
+      id: 11
+      mgmt_ip: 192.168.0.11/24
+      evpn_route_servers: []
+
+l3leaf:
+  defaults:
+    bgp_as: 65100-65198
+    platform: cEOS-lab
+    loopback_ipv4_pool: 192.168.101.0/24
+    vtep_loopback_ipv4_pool: 192.168.102.0/24
+    uplink_interfaces: [Ethernet1]
+    uplink_switches: [dc1-spine1]
+    uplink_ipv4_pool: 192.168.103.0/24
+    mlag_interfaces: [Ethernet3, Ethernet4]
+    mlag_peer_ipv4_pool: 10.255.252.0/24
+    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+    virtual_router_mac_address: 00:1c:73:00:00:99
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 16384
+    mlag: true
+  node_groups:
+    - group: mlag1
+      nodes:
+        - name: dc1-leaf1a
+          id: 1
+          mgmt_ip: 192.168.0.21/24
+          uplink_switch_interfaces: [Ethernet3]
+        - name: dc1-leaf1b
+          id: 2
+          mgmt_ip: 192.168.0.22/24
+          uplink_switch_interfaces: [Ethernet4]

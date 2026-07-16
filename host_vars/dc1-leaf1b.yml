@@ -1,0 +1,53 @@
+---
+custom_loopback_interfaces:
+  - name: Loopback1
+    description: SR-ISIS Router ID
+    ip_address: 192.168.99.12/32
+    isis_enable: CORE
+    isis_passive: true
+
+custom_ethernet_interfaces:
+  - name: Ethernet11
+    description: P2P_Core1_Ethernet11
+    mtu: 1500
+    ip_address: 192.168.98.7/31
+    isis_enable: CORE
+    isis_network_point_to_point: true
+  - name: Ethernet12
+    description: P2P_Core2_Ethernet12
+    mtu: 1500
+    ip_address: 192.168.98.9/31
+    isis_enable: CORE
+    isis_network_point_to_point: true
+
+custom_router_isis:
+  instance: CORE
+  net: 49.0001.0000.0000.0012.00
+  is_type: level-2
+  address_family_ipv4:
+    enabled: true
+  segment_routing_mpls:
+    enabled: true
+    router_id: 192.168.99.12
+    prefix_segments:
+      - prefix: 192.168.99.12/32
+        index: 12
+
+custom_router_bgp:
+  address_family_evpn:
+    neighbors:
+      - ip_address: 192.168.99.1
+        encapsulation: mpls
+      - ip_address: 192.168.99.2
+        encapsulation: mpls
+  neighbors:
+    - ip_address: 192.168.99.1
+      remote_as: 65298
+      update_source: Loopback1
+      ebgp_multihop: 5
+      send_community: extended
+    - ip_address: 192.168.99.2
+      remote_as: 65298
+      update_source: Loopback1
+      ebgp_multihop: 5
+      send_community: extended

@@ -1,0 +1,24 @@
+---
+servers:
+  - name: dc1-l2leaf1a
+    adapters:
+      - endpoint_ports: [ Ethernet1, Ethernet2 ]
+        switch_ports: [ Ethernet5, Ethernet5 ]
+        switches: [ dc1-leaf1a, dc1-leaf1b ]
+        vlans: 10
+        mode: access
+        spanning_tree_portfast: edge
+        port_channel:
+          description: PortChannel host1
+          mode: active
+  - name: dc2-l2leaf2a
+    adapters:
+      - endpoint_ports: [ Ethernet1, Ethernet2 ]
+        switch_ports: [ Ethernet5, Ethernet5 ]
+        switches: [ dc2-leaf2a, dc2-leaf2b ]
+        vlans: 10
+        mode: access
+        spanning_tree_portfast: edge
+        port_channel:
+          description: PortChannel host3
+          mode: active
