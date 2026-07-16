@@ -196,7 +196,7 @@ vlan 4094
 
 | Interface | Description | Channel Group | IP Address | VRF | MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | ------------- | ---------- | --- | --- | -------- | ------ | ------- |
-| Ethernet1 | P2P_dc2-spine1_Ethernet5 | - | 192.168.203.5/31 | default | 1500 | False | - | - |
+| Ethernet1 | P2P_dc2-spine1_Ethernet1 | - | 192.168.203.5/31 | default | 1500 | False | - | - |
 | Ethernet12 | P2P_Core1_Ethernet12 | - | 192.168.98.11/31 | default | 1500 | - | - | - |
 | Ethernet13 | P2P_Core2_Ethernet13 | - | 192.168.98.13/31 | default | 1500 | - | - | - |
 
@@ -212,7 +212,7 @@ vlan 4094
 ```eos
 !
 interface Ethernet1
-   description P2P_dc2-spine1_Ethernet5
+   description P2P_dc2-spine1_Ethernet1
    no shutdown
    mtu 1500
    no switchport
@@ -661,7 +661,7 @@ router bgp 65299
    neighbor 192.168.201.13 description dc2-spine1_Loopback0
    neighbor 192.168.203.4 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.203.4 remote-as 65002
-   neighbor 192.168.203.4 description dc2-spine1_Ethernet5
+   neighbor 192.168.203.4 description dc2-spine1_Ethernet1
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan 10

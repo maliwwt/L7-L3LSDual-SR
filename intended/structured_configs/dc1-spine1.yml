@@ -4,7 +4,7 @@ config_end: true
 enable_password:
   disabled: true
 ethernet_interfaces:
-- name: Ethernet3
+- name: Ethernet1
   description: P2P_dc1-leaf1a_Ethernet1
   shutdown: false
   mtu: 1500
@@ -15,7 +15,7 @@ ethernet_interfaces:
     peer_type: l3leaf
   switchport:
     enabled: false
-- name: Ethernet4
+- name: Ethernet2
   description: P2P_dc1-leaf1b_Ethernet1
   shutdown: false
   mtu: 1500

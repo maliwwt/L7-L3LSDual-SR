@@ -36,14 +36,14 @@
 
 | Type | Node | Node Interface | Peer Type | Peer Node | Peer Interface |
 | ---- | ---- | -------------- | --------- | --------- | -------------- |
-| l3leaf | dc1-leaf1a | Ethernet1 | spine | dc1-spine1 | Ethernet3 |
+| l3leaf | dc1-leaf1a | Ethernet1 | spine | dc1-spine1 | Ethernet1 |
 | l3leaf | dc1-leaf1a | Ethernet3 | mlag_peer | dc1-leaf1b | Ethernet3 |
 | l3leaf | dc1-leaf1a | Ethernet4 | mlag_peer | dc1-leaf1b | Ethernet4 |
-| l3leaf | dc1-leaf1b | Ethernet1 | spine | dc1-spine1 | Ethernet4 |
-| l3leaf | dc2-leaf2a | Ethernet1 | spine | dc2-spine1 | Ethernet5 |
+| l3leaf | dc1-leaf1b | Ethernet1 | spine | dc1-spine1 | Ethernet2 |
+| l3leaf | dc2-leaf2a | Ethernet1 | spine | dc2-spine1 | Ethernet1 |
 | l3leaf | dc2-leaf2a | Ethernet3 | mlag_peer | dc2-leaf2b | Ethernet3 |
 | l3leaf | dc2-leaf2a | Ethernet4 | mlag_peer | dc2-leaf2b | Ethernet4 |
-| l3leaf | dc2-leaf2b | Ethernet1 | spine | dc2-spine1 | Ethernet6 |
+| l3leaf | dc2-leaf2b | Ethernet1 | spine | dc2-spine1 | Ethernet2 |
 
 ## Fabric IP Allocation
 
@@ -58,10 +58,10 @@
 
 | Node | Node Interface | Node IP Address | Peer Node | Peer Interface | Peer IP Address |
 | ---- | -------------- | --------------- | --------- | -------------- | --------------- |
-| dc1-leaf1a | Ethernet1 | 192.168.103.1/31 | dc1-spine1 | Ethernet3 | 192.168.103.0/31 |
-| dc1-leaf1b | Ethernet1 | 192.168.103.3/31 | dc1-spine1 | Ethernet4 | 192.168.103.2/31 |
-| dc2-leaf2a | Ethernet1 | 192.168.203.5/31 | dc2-spine1 | Ethernet5 | 192.168.203.4/31 |
-| dc2-leaf2b | Ethernet1 | 192.168.203.7/31 | dc2-spine1 | Ethernet6 | 192.168.203.6/31 |
+| dc1-leaf1a | Ethernet1 | 192.168.103.1/31 | dc1-spine1 | Ethernet1 | 192.168.103.0/31 |
+| dc1-leaf1b | Ethernet1 | 192.168.103.3/31 | dc1-spine1 | Ethernet2 | 192.168.103.2/31 |
+| dc2-leaf2a | Ethernet1 | 192.168.203.5/31 | dc2-spine1 | Ethernet1 | 192.168.203.4/31 |
+| dc2-leaf2b | Ethernet1 | 192.168.203.7/31 | dc2-spine1 | Ethernet2 | 192.168.203.6/31 |
 
 ### Loopback Interfaces (BGP EVPN Peering)
 

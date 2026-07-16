@@ -110,21 +110,21 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Channel Group | IP Address | VRF | MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | ------------- | ---------- | --- | --- | -------- | ------ | ------- |
-| Ethernet5 | P2P_dc2-leaf2a_Ethernet1 | - | 192.168.203.4/31 | default | 1500 | False | - | - |
-| Ethernet6 | P2P_dc2-leaf2b_Ethernet1 | - | 192.168.203.6/31 | default | 1500 | False | - | - |
+| Ethernet1 | P2P_dc2-leaf2a_Ethernet1 | - | 192.168.203.4/31 | default | 1500 | False | - | - |
+| Ethernet2 | P2P_dc2-leaf2b_Ethernet1 | - | 192.168.203.6/31 | default | 1500 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
 ```eos
 !
-interface Ethernet5
+interface Ethernet1
    description P2P_dc2-leaf2a_Ethernet1
    no shutdown
    mtu 1500
    no switchport
    ip address 192.168.203.4/31
 !
-interface Ethernet6
+interface Ethernet2
    description P2P_dc2-leaf2b_Ethernet1
    no shutdown
    mtu 1500
