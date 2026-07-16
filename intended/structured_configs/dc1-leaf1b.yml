@@ -69,8 +69,11 @@ loopback_interfaces:
   shutdown: false
   ip_address: 192.168.101.2/32
 - name: Loopback1
-  description: SR-ISIS Router ID
+  description: VXLAN_TUNNEL_SOURCE
   shutdown: false
+  ip_address: 192.168.102.1/32
+- name: Loopback2
+  description: SR-ISIS Router ID
   ip_address: 192.168.99.12/32
   isis_enable: CORE
   isis_passive: true
@@ -201,12 +204,12 @@ router_bgp:
     description: dc1-spine1_Loopback0
   - ip_address: 192.168.99.1
     remote_as: '65298'
-    update_source: Loopback1
+    update_source: Loopback2
     send_community: extended
     ebgp_multihop: 5
   - ip_address: 192.168.99.2
     remote_as: '65298'
-    update_source: Loopback1
+    update_source: Loopback2
     send_community: extended
     ebgp_multihop: 5
   redistribute:

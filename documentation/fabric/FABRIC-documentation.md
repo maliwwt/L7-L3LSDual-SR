@@ -94,14 +94,14 @@
 
 | VTEP Loopback Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ------------------ | ------------------- | ------------------ | ------------------ |
-| 192.168.102.0/24 | 256 | 0 | 0.0 % |
-| 192.168.202.0/24 | 256 | 0 | 0.0 % |
+| 192.168.102.0/24 | 256 | 2 | 0.79 % |
+| 192.168.202.0/24 | 256 | 2 | 0.79 % |
 
 ### VTEP Loopback Node allocation
 
 | POD | Node | Loopback1 |
 | --- | ---- | --------- |
-| FABRIC | dc1-leaf1a | 192.168.99.11/32 |
-| FABRIC | dc1-leaf1b | 192.168.99.12/32 |
-| FABRIC | dc2-leaf2a | 192.168.99.23/32 |
-| FABRIC | dc2-leaf2b | 192.168.99.24/32 |
+| FABRIC | dc1-leaf1a | 192.168.102.1/32 |
+| FABRIC | dc1-leaf1b | 192.168.102.1/32 |
+| FABRIC | dc2-leaf2a | 192.168.202.3/32 |
+| FABRIC | dc2-leaf2b | 192.168.202.3/32 |

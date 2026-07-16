@@ -289,20 +289,22 @@ interface Port-Channel5
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
 | Loopback0 | ROUTER_ID | default | 192.168.101.1/32 |
-| Loopback1 | SR-ISIS Router ID | default | 192.168.99.11/32 |
+| Loopback1 | VXLAN_TUNNEL_SOURCE | default | 192.168.102.1/32 |
+| Loopback2 | SR-ISIS Router ID | default | 192.168.99.11/32 |
 
 ##### IPv6
 
 | Interface | Description | VRF | IPv6 Addresses |
 | --------- | ----------- | --- | -------------- |
 | Loopback0 | ROUTER_ID | default | - |
-| Loopback1 | SR-ISIS Router ID | default | - |
+| Loopback1 | VXLAN_TUNNEL_SOURCE | default | - |
+| Loopback2 | SR-ISIS Router ID | default | - |
 
 ##### ISIS
 
 | Interface | ISIS instance | ISIS metric | Interface mode |
 | --------- | ------------- | ----------- | -------------- |
-| Loopback1 | CORE | - | passive |
+| Loopback2 | CORE | - | passive |
 
 #### Loopback Interfaces Device Configuration
 
@@ -314,8 +316,12 @@ interface Loopback0
    ip address 192.168.101.1/32
 !
 interface Loopback1
-   description SR-ISIS Router ID
+   description VXLAN_TUNNEL_SOURCE
    no shutdown
+   ip address 192.168.102.1/32
+!
+interface Loopback2
+   description SR-ISIS Router ID
    ip address 192.168.99.11/32
    isis enable CORE
    isis passive
@@ -502,7 +508,7 @@ ip route vrf MGMT 0.0.0.0/0 192.168.0.1
 | --------- | ------------- | ----------- | -------------- |
 | Ethernet10 | CORE | - | point-to-point |
 | Ethernet11 | CORE | - | point-to-point |
-| Loopback1 | CORE | - | passive |
+| Loopback2 | CORE | - | passive |
 
 #### Prefix Segments
 
@@ -643,11 +649,11 @@ router bgp 65100
    neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER
    neighbor 10.255.251.1 description dc1-leaf1b_Vlan4093
    neighbor 192.168.99.1 remote-as 65298
-   neighbor 192.168.99.1 update-source Loopback1
+   neighbor 192.168.99.1 update-source Loopback2
    neighbor 192.168.99.1 ebgp-multihop 5
    neighbor 192.168.99.1 send-community extended
    neighbor 192.168.99.2 remote-as 65298
-   neighbor 192.168.99.2 update-source Loopback1
+   neighbor 192.168.99.2 update-source Loopback2
    neighbor 192.168.99.2 ebgp-multihop 5
    neighbor 192.168.99.2 send-community extended
    neighbor 192.168.101.11 peer group EVPN-OVERLAY-PEERS
