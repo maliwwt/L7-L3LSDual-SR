@@ -18,12 +18,12 @@
 
 | POD | Type | Node | Management IP | Platform | Provisioned in CloudVision | Serial Number |
 | --- | ---- | ---- | ------------- | -------- | -------------------------- | ------------- |
-| FABRIC | l3leaf | dc1-leaf1a | 192.168.0.21/24 | cEOS-lab | Provisioned | - |
-| FABRIC | l3leaf | dc1-leaf1b | 192.168.0.22/24 | cEOS-lab | Provisioned | - |
+| FABRIC | l3leaf | dc1-leaf1a | 192.168.0.13/24 | cEOS-lab | Provisioned | - |
+| FABRIC | l3leaf | dc1-leaf1b | 192.168.0.14/24 | cEOS-lab | Provisioned | - |
 | FABRIC | spine | dc1-spine1 | 192.168.0.11/24 | cEOS-lab | Provisioned | - |
-| FABRIC | l3leaf | dc2-leaf2a | 192.168.0.23/24 | cEOS | Provisioned | - |
-| FABRIC | l3leaf | dc2-leaf2b | 192.168.0.24/24 | cEOS | Provisioned | - |
-| FABRIC | spine | dc2-spine1 | 192.168.0.13/24 | cEOS | Provisioned | - |
+| FABRIC | l3leaf | dc2-leaf2a | 192.168.0.15/24 | cEOS | Provisioned | - |
+| FABRIC | l3leaf | dc2-leaf2b | 192.168.0.16/24 | cEOS | Provisioned | - |
+| FABRIC | spine | dc2-spine1 | 192.168.0.12/24 | cEOS | Provisioned | - |
 
 > Provision status is based on Ansible inventory declaration and do not represent real status from CloudVision.
 

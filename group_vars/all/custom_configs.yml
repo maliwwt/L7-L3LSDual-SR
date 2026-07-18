@@ -1,0 +1,25 @@
+---
+custom_management_api_http:
+  enable_vrfs:
+    - name: MGMT
+  enable_https: true
+
+custom_aaa_authorization:
+  exec:
+    default: local
+
+custom_ip_name_servers:
+  - ip_address: 169.254.169.254
+    vrf: default
+
+custom_dns_domain: atd.lab
+
+custom_daemon_terminattr:
+  cvaddrs:
+    - 192.168.0.5:9910
+  cvauth:
+    method: token
+    token_file: /tmp/token
+  cvvrf: MGMT
+  smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
+  disable_aaa: false

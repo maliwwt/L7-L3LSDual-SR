@@ -4,8 +4,14 @@
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
+  - [DNS Domain](#dns-domain)
+  - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
+  - [Local Users](#local-users)
   - [Enable Password](#enable-password)
+  - [AAA Authorization](#aaa-authorization)
+- [Monitoring](#monitoring)
+  - [TerminAttr Daemon](#terminattr-daemon)
 - [MLAG](#mlag)
   - [MLAG Summary](#mlag-summary)
   - [MLAG Device Configuration](#mlag-device-configuration)
@@ -53,13 +59,13 @@
 
 | Management Interface | Description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | OOB_MANAGEMENT | oob | MGMT | 192.168.0.24/24 | 192.168.0.1 |
+| Management1 | OOB_MANAGEMENT | oob | default | 192.168.0.16/24 | 192.168.0.1 |
 
 ##### IPv6
 
 | Management Interface | Description | Type | VRF | IPv6 Address | IPv6 Gateway | ND RA Disabled | ND RA RX Accept | ND Managed Config Flag | ND Other Config Flag | ND Cache | ND RA DNS Servers |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ | -------------- | --------------- | ---------------------- | -------------------- | -------- | ----------------- |
-| Management1 | OOB_MANAGEMENT | oob | MGMT | - | - | - | - | - | - | - | - |
+| Management1 | OOB_MANAGEMENT | oob | default | - | - | - | - | - | - | - | - |
 
 #### Management Interfaces Device Configuration
 
@@ -68,15 +74,104 @@
 interface Management1
    description OOB_MANAGEMENT
    no shutdown
+   ip address 192.168.0.16/24
+```
+
+### DNS Domain
+
+DNS domain: atd.lab
+
+#### DNS Domain Device Configuration
+
+```eos
+dns domain atd.lab
+!
+```
+
+### Management API HTTP
+
+#### Management API HTTP Summary
+
+| HTTP | HTTPS | UNIX-Socket | Default Services | Session Timeout |
+| ---- | ----- | ----------- | ---------------- | --------------- |
+| False | True | - | - | 1440 minutes |
+
+#### Management API VRF Access
+
+| VRF Name | IPv4 ACL | IPv6 ACL |
+| -------- | -------- | -------- |
+| MGMT | - | - |
+
+#### Management API HTTP Device Configuration
+
+```eos
+!
+management api http-commands
+   protocol https
+   no shutdown
+   !
    vrf MGMT
-   ip address 192.168.0.24/24
+      no shutdown
 ```
 
 ## Authentication
 
+### Local Users
+
+#### Local Users Summary
+
+| User | Privilege | Role | Disabled | Shell |
+| ---- | --------- | ---- | -------- | ----- |
+| cvpadmin | 15 | network-admin | False | - |
+| service | - | - | False | /bin/bash |
+
+#### Local Users Device Configuration
+
+```eos
+!
+username cvpadmin privilege 15 role network-admin secret sha512 <removed>
+username service shell /bin/bash secret sha512 <removed>
+```
+
 ### Enable Password
 
 Enable password has been disabled
+
+### AAA Authorization
+
+#### AAA Authorization Summary
+
+| Type | User Stores |
+| ---- | ----------- |
+| Exec | local |
+
+Authorization for configuration commands is disabled.
+
+#### AAA Authorization Device Configuration
+
+```eos
+aaa authorization exec default local
+!
+```
+
+## Monitoring
+
+### TerminAttr Daemon
+
+#### TerminAttr Daemon Summary
+
+| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
+| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
+| gzip | 192.168.0.5:9910 | MGMT | token,/tmp/token | ale,flexCounter,hardware,kni,pulse,strata | - | False |
+
+#### TerminAttr Daemon Device Configuration
+
+```eos
+!
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=token,/tmp/token -cvvrf=MGMT -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -taillogs
+   no shutdown
+```
 
 ## MLAG
 
@@ -454,7 +549,6 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True |
-| MGMT | False |
 | VRF_A | True |
 
 #### IP Routing Device Configuration
@@ -462,7 +556,6 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 ```eos
 !
 ip routing
-no ip routing vrf MGMT
 ip routing vrf VRF_A
 ```
 
@@ -473,7 +566,7 @@ ip routing vrf VRF_A
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | False |
-| MGMT | false |
+| default | false |
 | VRF_A | false |
 
 ### Static Routes
@@ -482,13 +575,13 @@ ip routing vrf VRF_A
 
 | VRF | Destination Prefix | Next Hop IP | Exit interface | Administrative Distance | Tag | Route Name | Metric |
 | --- | ------------------ | ----------- | -------------- | ----------------------- | --- | ---------- | ------ |
-| MGMT | 0.0.0.0/0 | 192.168.0.1 | - | 1 | - | - | - |
+| default | 0.0.0.0/0 | 192.168.0.1 | - | 1 | - | - | - |
 
 #### Static Routes Device Configuration
 
 ```eos
 !
-ip route vrf MGMT 0.0.0.0/0 192.168.0.1
+ip route 0.0.0.0/0 192.168.0.1
 ```
 
 ### Router ISIS
@@ -804,14 +897,11 @@ route-map RM-MLAG-PEER-IN permit 10
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
-| MGMT | disabled |
 | VRF_A | enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
-!
-vrf instance MGMT
 !
 vrf instance VRF_A
 ```

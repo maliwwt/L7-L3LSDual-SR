@@ -1,4 +1,4 @@
-# Core2
+# core2
 
 ## Table of Contents
 

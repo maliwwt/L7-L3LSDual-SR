@@ -1,5 +1,5 @@
 ---
-hostname: Core2
+hostname: core2
 
 loopback_interfaces:
   - name: Loopback0

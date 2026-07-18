@@ -3,13 +3,13 @@ all:
   children:
     CVP_cluster:
       vars:
-        ansible_user: ansible
-        ansible_password: CHANGEME
+        ansible_user: cvpadmin
+        ansible_password: cvp123!
         ansible_connection: httpapi
-        ansible_httpapi_use_ssl: True
+        ansible_httpapi_use_ssl: False
         ansible_httpapi_validate_certs: False
         ansible_network_os: eos
-        ansible_httpapi_port: 443
+        ansible_httpapi_port: 80
       hosts:
         cvp1:
           ansible_httpapi_host: 192.168.0.5
@@ -17,13 +17,13 @@ all:
 
     FABRIC:
       vars:
-        ansible_user: ansible
-        ansible_password: CHANGEME
+        ansible_user: cvpadmin
+        ansible_password: cvp123!
         ansible_connection: httpapi
-        ansible_httpapi_use_ssl: True
+        ansible_httpapi_use_ssl: False
         ansible_httpapi_validate_certs: False
         ansible_network_os: eos
-        ansible_httpapi_port: 443
+        ansible_httpapi_port: 80
         ansible_become: yes
         ansible_become_method: enable
       children:
@@ -62,20 +62,20 @@ all:
 
     CORE:
       vars:
-        ansible_user: ansible
-        ansible_password: CHANGEME
+        ansible_user: cvpadmin
+        ansible_password: cvp123!
         ansible_connection: httpapi
-        ansible_httpapi_use_ssl: True
+        ansible_httpapi_use_ssl: False
         ansible_httpapi_validate_certs: False
         ansible_network_os: eos
-        ansible_httpapi_port: 443
+        ansible_httpapi_port: 80
         ansible_become: yes
         ansible_become_method: enable
       hosts:
         Core1:
-          ansible_host: 192.168.0.17
+          ansible_host: 10.255.0.22
         Core2:
-          ansible_host: 192.168.0.18
+          ansible_host: 10.255.0.23
 
     EVPN_SERVICES:
       children:

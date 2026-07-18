@@ -8,7 +8,7 @@ spine:
   nodes:
     - name: dc2-spine1
       id: 13
-      mgmt_ip: 192.168.0.13/24
+      mgmt_ip: 192.168.0.12/24
       evpn_route_servers: []
 
 l3leaf:
@@ -33,9 +33,9 @@ l3leaf:
       nodes:
         - name: dc2-leaf2a
           id: 3
-          mgmt_ip: 192.168.0.23/24
+          mgmt_ip: 192.168.0.15/24
           uplink_switch_interfaces: [Ethernet1]
         - name: dc2-leaf2b
           id: 4
-          mgmt_ip: 192.168.0.24/24
+          mgmt_ip: 192.168.0.16/24
           uplink_switch_interfaces: [Ethernet2]

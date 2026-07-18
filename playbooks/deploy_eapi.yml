@@ -1,0 +1,11 @@
+---
+- name: Deploy Configurations via eAPI
+  hosts: FABRIC:CORE
+  gather_facts: false
+  vars:
+    ansible_httpapi_use_ssl: false
+    ansible_httpapi_port: 80
+  tasks:
+    - name: Deploy configurations directly to devices
+      ansible.builtin.import_role:
+        name: arista.avd.eos_config_deploy_eapi

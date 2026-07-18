@@ -1,6 +1,19 @@
+aaa_authorization:
+  exec:
+    default: local
 aaa_root:
   disabled: true
 config_end: true
+daemon_terminattr:
+  cvaddrs:
+  - 192.168.0.5:9910
+  cvauth:
+    method: token
+    token_file: /tmp/token
+  cvvrf: MGMT
+  disable_aaa: false
+  smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
+dns_domain: atd.lab
 enable_password:
   disabled: true
 ethernet_interfaces:
@@ -63,6 +76,14 @@ ip_igmp_snooping:
   globally_enabled: true
 ip_routing: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:99
+local_users:
+- name: cvpadmin
+  privilege: 15
+  role: network-admin
+  sha512_password: $6$vaI8k49c6d6d4MiH$G6PS.1eO2zE9i4JUQHlFCwfiI8sI4GKAtkHziTW2hF6esh2LweSEoRtrfdrt/hiHk9E3lTAKYan0IlfbKfftN1
+- name: service
+  sha512_password: $6$.4OXg4oiHxDbapUM$HSmxZjYjRyZHW9KEd.nYzSdGzAksyM5O3ji.oVzJ1HkVSyNxLql8udmTOEvQE4gd5KMHRgWH0hcnw/Ng5XqaV/
+  shell: /bin/bash
 loopback_interfaces:
 - name: Loopback0
   description: ROUTER_ID
@@ -77,12 +98,16 @@ loopback_interfaces:
   ip_address: 192.168.99.12/32
   isis_enable: CORE
   isis_passive: true
+management_api_http:
+  enable_https: true
+  enable_vrfs:
+  - name: MGMT
 management_interfaces:
-- name: Management0
+- name: Management1
   description: OOB_MANAGEMENT
   shutdown: false
-  vrf: MGMT
-  ip_address: 192.168.0.22/24
+  vrf: default
+  ip_address: 192.168.0.14/24
   type: oob
   gateway: 192.168.0.1
 metadata:
@@ -295,7 +320,7 @@ spanning_tree:
     priority: 16384
   no_spanning_tree_vlan: 4093-4094
 static_routes:
-- vrf: MGMT
+- vrf: default
   prefix: 0.0.0.0/0
   next_hop: 192.168.0.1
 transceiver_qsfp_default_mode_4x10: true
@@ -375,7 +400,7 @@ vlans:
     tenants:
     - ACME
 vrfs:
-- name: MGMT
+- name: default
   ip_routing: false
 - name: VRF_A
   ip_routing: true

@@ -1,14 +1,15 @@
 ---
-- name: Deploy fabric to CVP
-  hosts: cvp1
+- name: Deploy Configurations
+  hosts: FABRIC:CORE
+  connection: local
+  gather_facts: false
   tasks:
-    - name: Provision CVP with AVD configuration
+    - name: Deploy configurations and tags to CloudVision
       ansible.builtin.import_role:
-        name: arista.avd.eos_config_deploy_cvp
+        name: arista.avd.cv_deploy
       vars:
-        container_root: 'FABRIC'
-        configlets_prefix: 'AVD'
-        # apply_mode: strict # Don't use this unless AVD is the only source of configlets
-        state: present
-        execute_tasks: true # Set to true if you want the change to be made without a change control approval
-        cv_collection: v3
+        cv_server: 192.168.0.5
+        cv_username: cvpadmin
+        cv_password: "cvp123!"
+        cv_verify_certs: false
+        cv_run_change_control: true
